@@ -1,0 +1,22 @@
+{
+  "name": "ftauth",
+  "version": "0.1.0",
+  "description": "Final Task - Authorization and Authentication",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jurelmartin/FTAuth.git"
+  },
+  "keywords": [
+    "auth"
+  ],
+  "author": "jagustin@stratpoint.com <jagustin@stratpoint.com> (https://github.com/jurelmartin/FTAuth.git)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jurelmartin/FTAuth/issues"
+  },
+  "homepage": "https://github.com/jurelmartin/FTAuth#readme"
+}
