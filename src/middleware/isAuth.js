@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-exports.generate = (id, isAdmin, key) => {
+
+
+exports.generate = (id, role, key) => {
     try {
     const token = jwt.sign({
-                    id: id,
-                    isAdmin: isAdmin
+                    id,
+                    role
                     },
                     key);
     return token;
