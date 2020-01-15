@@ -2,7 +2,7 @@
   "name": "ftauth",
   "version": "0.1.0",
   "description": "Final Task - Authorization and Authentication",
-  "main": "app/main.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/jurelmartin/FTAuth/issues"
   },
-  "homepage": "https://github.com/jurelmartin/FTAuth#readme"
+  "homepage": "https://github.com/jurelmartin/FTAuth#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
 }
