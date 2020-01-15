@@ -1,4 +1,4 @@
-const {generate, verify} = require('../src/main');
+const {generate, verify} = require('../src/middleware/isAuth');
 
 
 const token = generate(1, 3,"supersecretkey");
