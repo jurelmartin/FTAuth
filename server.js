@@ -13,8 +13,6 @@ const {setCurrentRole} = require('./src/main/authorization');
 
 const tokenChecker = require('./tokenChecker')
 
-// const {dummy} = require('./app/loginUser');
-
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
