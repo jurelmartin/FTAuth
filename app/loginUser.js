@@ -10,14 +10,16 @@ const token = generateToken(1, userRole,"supersecretkey", '1h');
 if (token === undefined) {
     console.log('error');
 }
-console.log(token);
+
 return res.status(200).json({status: "200", message: 'login success', token: token});
 };
 
 exports.issueNewToken = (req, res, next) => {
     const userRole = Role.User
 
-    const token = newToken(refreshToken);
+    const refreshToken = req.params.refreshToken;
+
+    const token = newToken(refreshToken, req.decodedToken);
 
     if (token === undefined) {
         console.log('error');

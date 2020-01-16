@@ -5,27 +5,25 @@ let tokenRecords = {};
 
 exports.generateToken = (id, role, key, expiration) => {
     try {
+
+    const refreshToken = jwt.sign({},key,{expiresIn: '24hr'});
     const token = jwt.sign({
             id,
-            role
+            role,
+            refreshToken
             },
             key,
             {
                 expiresIn: expiration
     });
-    const refreshToken = jwt.sign({
-            id,
-            role
-            },
-            key,
-            {
-                expiresIn: '24hr'
-    });
     const tokenResponse = {
         "token": token,
         "refreshToken": refreshToken 
     }
+
     tokenRecords[refreshToken] = tokenResponse;
+    console.log("in generateToken " +tokenRecords[refreshToken]);
+    console.log(tokenResponse);
     return tokenResponse;
     } catch(err){
         return (undefined);
@@ -41,23 +39,24 @@ exports.verifyToken = (token, key) => {
     }
 };
 
-exports.newToken = (refreshToken) => {
-    try {
+exports.newToken = (refreshToken, decodedToken) => {
 
-        
-        if((refreshToken) && (refreshToken in tokenRecords)) {
+    try {    
+        const list = tokenRecords.map((x) => {return x.refreshToken});
+
+        if((refreshToken) && (refreshToken in list)) {
             const token = jwt.sign({
-                id,
-                role
+                id: decodedToken.id,
+                role: decodedToken.role
                 },
                 key,
                 {
-                    expiresIn: expiration
+                    expiresIn: '24h'
             });
             const newTokenResponse = {
                 "token": token
             }
-            tokenRecords[bodyData.refreshToken].token = token;
+            tokenRecords[refreshToken].token = token;
             return newTokenResponse;
         }
     }catch (err){
