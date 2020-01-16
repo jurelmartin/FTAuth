@@ -13,6 +13,8 @@ const {setCurrentRole} = require('./src/main/authorization');
 
 const {verifyMiddleware} = require('./utils/verification');
 
+const tokenChecker = require('./tokenChecker')
+
 // const {dummy} = require('./app/loginUser');
 
 
@@ -27,8 +29,8 @@ app.use((req, res, next) => {
   });
 
 app.use('/login', login);
-app.use('/token/:refreshToken', verifyMiddleware, issueNewToken);
-app.use('/', verifyMiddleware ,checkUser(Role),dummy);
+app.use('/token/:refreshToken',tokenChecker, issueNewToken);
+app.use('/', tokenChecker ,checkUser(Role),dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');

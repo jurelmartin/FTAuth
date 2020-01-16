@@ -12,21 +12,19 @@ exports.verifyMiddleware = (req, res, next) => {
         let decodedToken;
         try {
           decodedToken = verifyToken(token, "supersecretkey");
+          return decodedToken;
         } catch (err) {
             return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
         }
-        if (!decodedToken) {
-            return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
-        }
-        req.decodedToken = decodedToken;
-        req.userId = decodedToken.id;
-        req.role = decodedToken.role;
-        req.refreshToken = decodedToken.refreshToken;
         
-        setCurrentRole(req.role)
+        // req.decodedToken = decodedToken;
+        // req.userId = decodedToken.id;
+        // req.role = decodedToken.role;
+        // req.refreshToken = decodedToken.refreshToken;
+        
+
         next();
         };
-    
-    
+
 
  

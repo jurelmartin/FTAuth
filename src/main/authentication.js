@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../_helper/role');
 
-exports.generateToken = (id, role, key, expiration) => {
+exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpiration) => {
     try {
 
     const refreshToken = jwt.sign({},key,{expiresIn: '24hr'});
@@ -25,14 +25,30 @@ exports.generateToken = (id, role, key, expiration) => {
     }
 };
 
-exports.verifyToken = (token, key) => {
-    try{
-        const decrypt = jwt.verify(token, key);
-        return decrypt;
-    } catch (err){
-        return ("Invalid signature.");
+exports.verify = (req, res, next) => {
+    const authHeader = req.get('Authorization');
+    if (!authHeader) {
+        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
     }
-};
+    const token = authHeader.split(' ')[1];
+    let decodedToken;
+    try {
+
+      decodedToken = jwt.verify(token, "supersecretkey");
+      return decodedToken;
+    } catch (err) {
+        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+    }
+    
+    // req.decodedToken = decodedToken;
+    // req.userId = decodedToken.id;
+    // req.role = decodedToken.role;
+    // req.refreshToken = decodedToken.refreshToken;
+    
+
+    next();
+    };
+
 
 // exports.newToken = (refreshToken, decodedToken) => {
 
