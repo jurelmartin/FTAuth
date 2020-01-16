@@ -39,41 +39,4 @@ exports.verify = (req, res, next) => {
     } catch (err) {
         return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
     }
-    
-    // req.decodedToken = decodedToken;
-    // req.userId = decodedToken.id;
-    // req.role = decodedToken.role;
-    // req.refreshToken = decodedToken.refreshToken;
-    
-
-    next();
     };
-
-
-// exports.newToken = (refreshToken, decodedToken) => {
-
-//     try {    
-//         const list = tokenRecords.map((x) => {return x.refreshToken});
-
-//         if((refreshToken) && (refreshToken in list)) {
-//             const token = jwt.sign({
-//                 id: decodedToken.id,
-//                 role: decodedToken.role
-//                 },
-//                 key,
-//                 {
-//                     expiresIn: '24h'
-//             });
-//             const newTokenResponse = {
-//                 "token": token
-//             }
-//             tokenRecords[refreshToken].token = token;
-//             return newTokenResponse;
-//         }
-//     }catch (err){
-//         return ("Invalid refresh token.");
-//     }
-
-
-// };
-
