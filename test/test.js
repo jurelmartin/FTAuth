@@ -10,4 +10,8 @@ describe("#FTAuth", function() {
         const token = generate(1, Role.User,"supersecretkey");
         expect(token).to.not.equal(undefined);
     });
+    it('should not be verified', function() {
+        const token = verify('19876rtfghnbmnlj', "supersecretkey");
+        expect(token).to.equal("Invalid signature.");
+    });
 });
