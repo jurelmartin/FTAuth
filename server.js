@@ -43,6 +43,7 @@ app.use('/token/:refreshToken', (req, res, next) => {
   req.decodedToken = decodedToken;
   req.userId = decodedToken.id;
   req.role = decodedToken.role;
+  req.refreshToken = decodedToken.refreshToken;
   
   setCurrentRole(req.role)
   

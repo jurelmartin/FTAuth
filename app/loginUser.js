@@ -15,17 +15,27 @@ return res.status(200).json({status: "200", message: 'login success', token: tok
 };
 
 exports.issueNewToken = (req, res, next) => {
-    const userRole = Role.User
 
     const refreshToken = req.params.refreshToken;
 
-    const token = newToken(refreshToken, req.decodedToken);
-
-    if (token === undefined) {
-        console.log('error');
+    if (req.refreshToken === refreshToken)
+    {
+        const newToken = generateToken(req.userId, req.role, 'supersecretkey', '1h');
+        res.status(200).json({message: "New token generated", token: newToken});
+    }else{
+        res.status(401).json({message: "failed to generate new token"});
     }
+    // const userRole = Role.User
+
+
+
+    // const token = newToken(refreshToken, req.decodedToken);
+
+    // if (token === undefined) {
+    //     console.log('error');
+    // }
     
-    return res.status(200).json({status: "200", message: 'issue new token success', token: token});
+    // return res.status(200).json({status: "200", message: 'issue new token success', token: token});
 };
 
 
