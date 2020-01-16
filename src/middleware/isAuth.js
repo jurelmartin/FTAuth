@@ -12,7 +12,7 @@ exports.generate = (id, role, key) => {
                     key);
     return token;
     } catch(err){
-        return ('Failed to generate token.');
+        return (undefined);
     }
 };
 
