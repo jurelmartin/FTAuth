@@ -1,17 +1,16 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../_helper/role');
 
-
-let userRole;
-
-
-exports.generateToken = (id, role, key) => {
+exports.generateToken = (id, role, key, expiration) => {
     try {
     const token = jwt.sign({
                     id,
                     role
                     },
-                    key);
+                    key,
+                    {
+                        expiresIn: expiration
+                    });
     return token;
     } catch(err){
         return (undefined);

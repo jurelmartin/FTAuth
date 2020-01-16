@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../_helper/role')
+const sinon = require('sinon');
 
-
-
-exports.authorize = (roles = []) => {
+exports.checkUser = (roles = []) => {
 
 
     if (typeof roles === 'string'){
@@ -24,7 +23,7 @@ exports.authorize = (roles = []) => {
 
 };
 
-exports.setRole = (role) => {
+exports.setCurrentRole = (role) => {
     return userRole = role;
 };
 

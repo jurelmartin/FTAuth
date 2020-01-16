@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const {authorize} = require('./src/main/authorization');
+const {checkUser} = require('./src/main/authorization');
 
 const Role = require('./src/_helper/role');
 
@@ -9,7 +9,7 @@ const {login} = require('./app/loginUser');
 
 const {verifyToken} = require('./src/main/authentication');
 
-const {setRole} = require('./src/main/authorization');
+const {setCurrentRole} = require('./src/main/authorization');
 
 const {dummy} = require('./app/loginUser');
 
@@ -46,11 +46,14 @@ req.role = decodedToken.role;
 
 console.log(req.role);
 
-setRole(req.role)
+setCurrentRole(req.role)
 
 next();
-},authorize([Role.User, Role.Admin]),dummy);
+},checkUser(Role),dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
+    setCurrentRole('User');
+    const result = checkUser('Admin');
+    console.log(checkUser(roles = ['Admin']));
 });
