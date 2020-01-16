@@ -1,33 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../_helper/role')
 
-let userRole;
 
-exports.generate = (id, role, key) => {
-    try {
-    const token = jwt.sign({
-                    id,
-                    role
-                    },
-                    key);
-    return token;
-    } catch(err){
-        return (undefined);
-    }
-};
-
-exports.verify = (token, key) => {
-    try{
-        const decrypt = jwt.verify(token, key);
-        return decrypt;
-    } catch (err){
-        return ("Invalid signature.");
-    }
-};
-
-exports.setRole = (role) => {
-    return userRole = role;
-};
 
 exports.authorize = (roles = []) => {
 
@@ -48,4 +22,9 @@ exports.authorize = (roles = []) => {
         }
     ];
 
-}
+};
+
+exports.setRole = (role) => {
+    return userRole = role;
+};
+

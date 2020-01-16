@@ -1,15 +1,15 @@
 const express = require('express');
 const app = express();
 
-const {authorize} = require('./src/middleware/isAuth');
+const {authorize} = require('./src/main/authorization');
 
 const Role = require('./src/_helper/role');
 
 const {login} = require('./app/loginUser');
 
-const {verify} = require('./src/middleware/isAuth');
+const {verifyToken} = require('./src/main/authentication');
 
-const {setRole} = require('./src/middleware/isAuth');
+const {setRole} = require('./src/main/authorization');
 
 const {dummy} = require('./app/loginUser');
 
@@ -33,7 +33,7 @@ if (!authHeader) {
 const token = authHeader.split(' ')[1];
 let decodedToken;
 try {
-  decodedToken = verify(token, "supersecretkey");
+  decodedToken = verifyToken(token, "supersecretkey");
 } catch (err) {
     return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
 }
