@@ -5,13 +5,13 @@ const {checkUser} = require('./src/main/authorization');
 
 const Role = require('./src/_helper/role');
 
-const {login} = require('./app/loginUser');
+const {login, issueNewToken, dummy} = require('./app/loginUser');
 
 const {verifyToken} = require('./src/main/authentication');
 
 const {setCurrentRole} = require('./src/main/authorization');
 
-const {dummy} = require('./app/loginUser');
+// const {dummy} = require('./app/loginUser');
 
 
 app.use((req, res, next) => {
@@ -25,6 +25,7 @@ app.use((req, res, next) => {
   });
 
 app.use('/login', login);
+app.use('/token', issueNewToken)
 app.use('/', (req, res, next) => {
 const authHeader = req.get('Authorization');
 if (!authHeader) {
