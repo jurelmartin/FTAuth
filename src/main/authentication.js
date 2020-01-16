@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../_helper/role');
 
-let tokenRecords = {};
-
 exports.generateToken = (id, role, key, expiration) => {
     try {
 
@@ -21,9 +19,6 @@ exports.generateToken = (id, role, key, expiration) => {
         "refreshToken": refreshToken 
     }
 
-    tokenRecords[refreshToken] = tokenResponse;
-    console.log("in generateToken " +tokenRecords[refreshToken]);
-    console.log(tokenResponse);
     return tokenResponse;
     } catch(err){
         return (undefined);
@@ -39,30 +34,30 @@ exports.verifyToken = (token, key) => {
     }
 };
 
-exports.newToken = (refreshToken, decodedToken) => {
+// exports.newToken = (refreshToken, decodedToken) => {
 
-    try {    
-        const list = tokenRecords.map((x) => {return x.refreshToken});
+//     try {    
+//         const list = tokenRecords.map((x) => {return x.refreshToken});
 
-        if((refreshToken) && (refreshToken in list)) {
-            const token = jwt.sign({
-                id: decodedToken.id,
-                role: decodedToken.role
-                },
-                key,
-                {
-                    expiresIn: '24h'
-            });
-            const newTokenResponse = {
-                "token": token
-            }
-            tokenRecords[refreshToken].token = token;
-            return newTokenResponse;
-        }
-    }catch (err){
-        return ("Invalid refresh token.");
-    }
+//         if((refreshToken) && (refreshToken in list)) {
+//             const token = jwt.sign({
+//                 id: decodedToken.id,
+//                 role: decodedToken.role
+//                 },
+//                 key,
+//                 {
+//                     expiresIn: '24h'
+//             });
+//             const newTokenResponse = {
+//                 "token": token
+//             }
+//             tokenRecords[refreshToken].token = token;
+//             return newTokenResponse;
+//         }
+//     }catch (err){
+//         return ("Invalid refresh token.");
+//     }
 
 
-};
+// };
 
