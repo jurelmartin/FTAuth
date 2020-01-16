@@ -2,7 +2,7 @@
 
 const {expect} = require('chai');
 
-const {generate, verify} = require('../src/middleware/isAuth');
+const {generate, verify} = require('../src/main/isAuth');
 const Role = require('../src/_helper/role');
 
 describe("#FTAuth", function() {
