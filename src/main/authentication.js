@@ -47,32 +47,3 @@ exports.verify = (res, req, next) => {
     
 
     };
-
-
-// exports.newToken = (refreshToken, decodedToken) => {
-
-//     try {    
-//         const list = tokenRecords.map((x) => {return x.refreshToken});
-
-//         if((refreshToken) && (refreshToken in list)) {
-//             const token = jwt.sign({
-//                 id: decodedToken.id,
-//                 role: decodedToken.role
-//                 },
-//                 key,
-//                 {
-//                     expiresIn: '24h'
-//             });
-//             const newTokenResponse = {
-//                 "token": token
-//             }
-//             tokenRecords[refreshToken].token = token;
-//             return newTokenResponse;
-//         }
-//     }catch (err){
-//         return ("Invalid refresh token.");
-//     }
-
-
-// };
-

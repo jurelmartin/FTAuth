@@ -11,8 +11,6 @@ const {verifyToken} = require('./src/main/authentication');
 
 const {setCurrentRole} = require('./src/main/authorization');
 
-const {verifyMiddleware} = require('./utils/verification');
-
 const tokenChecker = require('./tokenChecker')
 
 // const {dummy} = require('./app/loginUser');
