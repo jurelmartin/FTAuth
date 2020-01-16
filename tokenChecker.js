@@ -5,7 +5,9 @@ const {setCurrentRole} = require('./src/main/authorization')
 module.exports = (req, res, next) => { 
 
 //  gets the decoded token from verify function
-const decodedToken = verify;
+const decodedToken = verify();
+
+console.log(decodedToken);
 
 req.refreshToken = decodedToken.refreshToken;
 

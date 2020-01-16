@@ -25,7 +25,7 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
     }
 };
 
-exports.verify = (req, res, next) => {
+exports.verify = (res, req, next) => {
     const authHeader = req.get('Authorization');
     if (!authHeader) {
         return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
@@ -46,7 +46,6 @@ exports.verify = (req, res, next) => {
     // req.refreshToken = decodedToken.refreshToken;
     
 
-    next();
     };
 
 

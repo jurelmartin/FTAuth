@@ -5,7 +5,7 @@ const Role = require('../src/_helper/role');
 exports.login = (req, res, next) => {
 const userRole = Role.User
 
-const token = generateToken(1, userRole,"supersecretkey", '1h', '24h');
+const token = generateToken(1, userRole,"supersecretkey", '1h', '24hr');
 
 if (token === undefined) {
     console.log('error');

@@ -30,11 +30,8 @@ app.use((req, res, next) => {
 
 app.use('/login', login);
 app.use('/token/:refreshToken',tokenChecker, issueNewToken);
-app.use('/', tokenChecker ,checkUser(Role),dummy);
+app.use('/', tokenChecker ,checkUser(Role.Admin),dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
-    setCurrentRole('User');
-    const result = checkUser('Admin');
-    console.log(checkUser(roles = ['Admin']));
 });
