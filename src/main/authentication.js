@@ -4,7 +4,7 @@ const Role = require('../_helper/role');
 exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpiration) => {
     try {
 
-    const refreshToken = jwt.sign({},key,{expiresIn: '24hr'});
+    const refreshToken = jwt.sign({},key,{expiresIn: refreshTokenExpiration});
     const token = jwt.sign({
             id,
             role,
@@ -12,7 +12,7 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
             },
             key,
             {
-                expiresIn: expiration
+                expiresIn: accessTokenExpiration
     });
     const tokenResponse = {
         "token": token,
