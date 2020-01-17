@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken');
-const Role = require('../_helper/role')
-const sinon = require('sinon');
 
 exports.checkUser = (roles = []) => {
 

@@ -71,3 +71,49 @@ module.exports = (req, res, next) => {
 };
 ```
 
+
+### Using it as a middleware
+
+
+
+```javascript
+const {checkUser} = require('FTAuth');
+const Role = require('FTAuth/_helper');
+const tokenChecker = require('./tokenChecker')
+```
+> The code behind tokenChecker (or your middleware): 
+```javascript
+const {verifyToken} = require('FTAuth');
+const {setCurrentRole} = require('FTAuth')
+
+
+module.exports = (req, res, next) => { 
+    const authHeader = req.get('Authorization');
+    // gets the decoded token from verify function
+    const decodedToken = verifyToken(authHeader, 'supersecretkey');
+
+    if (!decodedToken) {
+        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+    }
+    // put the decoded refresh token to request
+    req.refreshToken = decodedToken.refreshToken;
+
+    // set User's role for the checkUser function
+    setCurrentRole(decodedToken.role);
+
+    next();
+
+}
+
+```
+
+> Example when using a use case
+
+```javascript
+app.use('/token/:refreshToken',tokenChecker, issueNewToken);
+```
+
+What this does is:
+1.) Authenticate the route first
+2.) If it succeeds, Will create a new token 
+
