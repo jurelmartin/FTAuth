@@ -27,7 +27,7 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
 
 exports.verify = (authHeader) => {
     if (!authHeader) {
-        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+        return false;
     }
     const token = authHeader.split(' ')[1];
     let decodedToken;
@@ -35,7 +35,7 @@ exports.verify = (authHeader) => {
       decodedToken = jwt.verify(token, "supersecretkey");
       return decodedToken;
     } catch (err) {
-        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+        return false;
     }
     
     // req.decodedToken = decodedToken;

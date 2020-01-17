@@ -7,6 +7,10 @@ module.exports = (req, res, next) => {
 //  gets the decoded token from verify function
     const decodedToken = verify(authHeader);
 
+    if (!decodedToken) {
+        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+    }
+
     console.log(decodedToken);
 
     req.refreshToken = decodedToken.refreshToken;
