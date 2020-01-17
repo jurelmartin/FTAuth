@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/jurelmartin/FTAuth.svg?branch=master)](https://travis-ci.com/jurelmartin/FTAuth)
+
 # FTAuth
 Final Task - Authentication and Authorization
 
