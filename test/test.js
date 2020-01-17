@@ -10,23 +10,14 @@ const Role = require('../src/_helper/role');
 describe("FTAuth", function() {
     it('should generate token', () => {
         const token = authentication.generateToken(1, Role.User,"supersecretkey", '1h', '24h');
-        expect(token).to.not.equal(undefined);
+        expect(token).to.not.equal(false);
     })
     it("should set the current user's role", () => {
         expect(authorization.setCurrentRole('Admin')).to.equal('Admin');
     });
-    it("should check if user is authorized", () => {
-        authorization.setCurrentRole('User')
-        const req = mocks.createRequest();
-        const res = mocks.createResponse();
-
-        const result = authorization.checkUser(Role.Admin); 
-
-        result(req, res);
-
-        var data = res._getJSONData();
-
-        expect(data.status).to.equal('401');
+    it("should check if user is authenticated", () => {
+        const isAuthenticated = authentication.verifyToken('dummy authHeader', 'dummy key');
+        expect(isAuthenticated).to.equal(false);
         
     });
     

@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
 app.use('/login', login);
 app.use('/token/:refreshToken',tokenChecker, issueNewToken);
-app.use('/', tokenChecker ,checkUser(Role.Admin),dummy);
+app.use('/', tokenChecker ,checkUser(Role),dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
