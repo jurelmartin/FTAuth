@@ -1,1 +1,4 @@
 node_modules
+/app
+server.js
+tokenChecker.js
