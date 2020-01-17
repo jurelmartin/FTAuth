@@ -2,6 +2,7 @@
 # FTAuth 
 [![Build Status](https://travis-ci.com/jurelmartin/FTAuth.svg?branch=master)](https://travis-ci.com/jurelmartin/FTAuth)
 [![Coverage Status](https://coveralls.io/repos/github/jurelmartin/FTAuth/badge.svg?branch=master)](https://coveralls.io/github/jurelmartin/FTAuth?branch=master)
+
 Final Task - Authentication and Authorization
 
 ## Install
