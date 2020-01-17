@@ -7,10 +7,6 @@ const Role = require('./src/_helper/role');
 
 const {login, issueNewToken, dummy} = require('./app/loginUser');
 
-const {verifyToken} = require('./src/main/authentication');
-
-const {setCurrentRole} = require('./src/main/authorization');
-
 const tokenChecker = require('./tokenChecker')
 
 
