@@ -13,7 +13,7 @@ exports.checkUser = (roles = []) => {
         (req, res, next) => {
             if (roles.length && !roles.includes(userRole)) {
                 // user's role is not authorized
-                return res.status(401).json({ status: "401" , message: 'Unauthorized' });
+                res.status(401).json({ status: "401" , message: 'Unauthorized' });
             }
             // authentication and authorization successful
             next();

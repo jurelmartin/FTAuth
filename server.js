@@ -11,6 +11,8 @@ const {verifyToken} = require('./src/main/authentication');
 
 const {setCurrentRole} = require('./src/main/authorization');
 
+
+
 const tokenChecker = require('./tokenChecker')
 
 
@@ -30,4 +32,5 @@ app.use('/', tokenChecker ,checkUser(Role),dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
+
 });
