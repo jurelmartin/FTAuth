@@ -1,4 +1,4 @@
-const {generateToken, newToken} = require('../src/main/authentication');
+const {generateToken} = require('../src/main/authentication');
 const Role = require('../src/_helper/role');
 
 
