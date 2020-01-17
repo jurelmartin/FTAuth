@@ -25,22 +25,17 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
     }
 };
 
-exports.verify = (authHeader) => {
+exports.verifyToken = (authHeader, key) => {
     if (!authHeader) {
         return false;
     }
     const token = authHeader.split(' ')[1];
     let decodedToken;
     try {
-      decodedToken = jwt.verify(token, "supersecretkey");
+      decodedToken = jwt.verify(token, key);
       return decodedToken;
     } catch (err) {
         return false;
     }
-    
-    // req.decodedToken = decodedToken;
-    // req.userId = decodedToken.id;
-    // req.role = decodedToken.role;
-    // req.refreshToken = decodedToken.refreshToken;
 
     };
