@@ -3,15 +3,15 @@ const Role = require('../src/_helper/role');
 
 
 exports.login = (req, res, next) => {
-const userRole = Role.User
 
-const token = generateToken(1, userRole,"supersecretkey", '1h', '24hr');
+    const userRole = Role.User
+    const token = generateToken(1, userRole,"supersecretkey", '1h', '24hr');
 
-if (token === undefined) {
-    console.log('error');
-}
+    if (token === undefined) {
+        console.log('error');
+    }
 
-return res.status(200).json({status: "200", message: 'login success', token: token});
+    return res.status(200).json({status: "200", message: 'login success', token: token});
 };
 
 exports.issueNewToken = (req, res, next) => {
@@ -25,20 +25,10 @@ exports.issueNewToken = (req, res, next) => {
     }else{
         res.status(401).json({message: "failed to generate new token"});
     }
-    // const userRole = Role.User
-
-
-
-    // const token = newToken(refreshToken, req.decodedToken);
-
-    // if (token === undefined) {
-    //     console.log('error');
-    // }
-    
-    // return res.status(200).json({status: "200", message: 'issue new token success', token: token});
 };
 
 
-exports.dummy = (req, res, next) => {    
+exports.dummy = (req, res, next) => {
+    // for testing the routes ONLY
     return res.status(200).json({status: "200", message: 'youve reached dummy.'});
-    };
+};
