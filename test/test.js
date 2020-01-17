@@ -1,7 +1,6 @@
 'use strict'
 
 const mocks = require('node-mocks-http');
-const data = require('../data')
 const {expect} = require('chai');
 
 const {authentication} = require('../index');
