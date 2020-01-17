@@ -21,7 +21,7 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
 
     return tokenResponse;
     } catch(err){
-        return (undefined);
+        return false;
     }
 };
 
