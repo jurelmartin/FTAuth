@@ -20,7 +20,7 @@ exports.issueNewToken = (req, res, next) => {
 
     if (req.refreshToken === refreshToken)
     {
-        const newToken = generateToken(req.userId, req.role, 'supersecretkey', '1h');
+        const newToken = generateToken(req.userId, req.role, 'supersecretkey', '1h' , '24h');
         res.status(200).json({message: "New token generated", token: newToken});
     }else{
         res.status(401).json({message: "failed to generate new token"});
