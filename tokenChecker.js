@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
     const decodedToken = verify(authHeader);
 
     console.log(decodedToken);
+
     req.refreshToken = decodedToken.refreshToken;
+
 // set User's role for the checkUser function
     setCurrentRole(decodedToken.role);
 
