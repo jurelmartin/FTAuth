@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpiration) => {
+exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration) => {
     try {
         const refreshToken = jwt.sign({},key,{expiresIn: refreshTokenExpiration});
         const token = jwt.sign({
             id,
-            role,
             refreshToken
         },key,{ expiresIn: accessTokenExpiration });
         const tokenResponse = {
