@@ -1,4 +1,3 @@
-const url = require('url');
 const {getPath} = require('../_helper/paths');
 
 let requestUrl, userRole;
@@ -22,6 +21,7 @@ exports.checkUser = (roles = [], paths = {}) => {
     ];
 
 };
+
 exports.setRequestUrl = (url) => {
     requestUrl = url;
 }
@@ -48,22 +48,6 @@ exports.checkPermission = (url, role) => {
     ];
 
 };
-
-exports.filterMethod = (methods = {}) => {
-    return [
-        (req, res, next) => {
-            if(methods[userRole]){
-                if(methods[userRole].includes(req.method)){
-                    next();
-                }else{
-                    res.status(401).json({status: '401', message: "Unauthorized"});
-                }
-            }else{
-                res.status(401).json({status: '401', message: "Unauthorized"});  
-            }
-        }
-    ]
-}
 
 exports.setCurrentRole = (role) => {
     userRole = role;
