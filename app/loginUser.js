@@ -1,11 +1,9 @@
 const {generateToken} = require('../src/main/authentication');
-const Role = require('../src/_helper/role');
 const url = require('url');
 
 
 exports.login = (req, res, next) => {
 
-    const userRole = Role.User
     const token = generateToken(1,"supersecretkey", '1h', '24hr');
 
     if (token === undefined) {

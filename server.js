@@ -2,9 +2,7 @@ const express = require('express');
 const app = express();
 const url = require('url');
 
-const {checkUser, filterPath} = require('./src/main/authorization');
-
-const Role = require('./src/_helper/role');
+const {checkPermission} = require('./src/main/authorization');
 
 const {login, issueNewToken, dummy} = require('./app/loginUser');
 
@@ -23,25 +21,10 @@ app.use((req, res, next) => {
 
 
 app.use(tokenChecker);
-app.use(filterPath({
-  Admin: {
-      paths: [
-        ["POST","/"],
-        ["GET","/login"],
-        ["GET","/log"]
-        ["GET", "/tok"]
-      ]},
-  User: {
-      paths: [
-        ["GET","/tok"],
-        ["GET","/token"]
-      ]
-  }
-  }));
-
-app.use('/token/:refreshToken',issueNewToken);
-app.use('/token',dummy);
-app.use('/tok',dummy);
+app.use(checkPermission());
+  app.post('/login', login);
+  app.get('/dummy', dummy);
+  app.post('/dum', dummy);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');

@@ -1,4 +1,7 @@
 const url = require('url');
+const {getPath} = require('../_helper/paths');
+
+let requestUrl, userRole;
 
 exports.checkUser = (roles = [], paths = {}) => {
 
@@ -19,44 +22,50 @@ exports.checkUser = (roles = [], paths = {}) => {
     ];
 
 };
+exports.setRequestUrl = (url) => {
+    requestUrl = url;
+}
 
-exports.filterPath = (paths = {}) => {
+exports.checkPermission = (url, role) => {
+    const Role = role || userRole;
+    const getUrl = url || requestUrl
     return [
         (req, res, next) => {
-                if (paths[userRole]){
+                    
+            const pathList = getPath();
 
-                    const pathList = paths[userRole].paths.map((path) => {
-                        const filter = url.format({
-                            protocol: req.protocol,
-                            host: req.get('host'),
-                            pathname: path[1],
-                        });
-                        return [path[0],filter];
-                    });
-
-                        const requestPath = url.format({
-                            protocol: req.protocol,
-                            host: req.get('host'),
-                            pathname: req.path,
-                        });
-
-                        pathList.forEach((path) => {
-                            if (requestPath.includes(path[1]) && path[0] == req.method){
-                                next();
-                            }        
-                        });
-
-                        res.status(401).json({status: '401', message: "Unauthorized"});
-
-                }else{
-                    res.status(401).json({status: '401', message: "Unauthorized"});  
+            for(path of pathList) {
+                    if (path.url == getUrl && path.method == requestMethod){ 
+                        if (path.roles.includes(Role)){
+                            break;
+                        }else{
+                            res.status(403).json({status: '403', message: "Unauthorized"});
+                        }
+                    }
                 }
+                next();
         }
     ];
 
 };
 
+exports.filterMethod = (methods = {}) => {
+    return [
+        (req, res, next) => {
+            if(methods[userRole]){
+                if(methods[userRole].includes(req.method)){
+                    next();
+                }else{
+                    res.status(401).json({status: '401', message: "Unauthorized"});
+                }
+            }else{
+                res.status(401).json({status: '401', message: "Unauthorized"});  
+            }
+        }
+    ]
+}
+
 exports.setCurrentRole = (role) => {
-    return userRole = role;
+    userRole = role;
 };
 
