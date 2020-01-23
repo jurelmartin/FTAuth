@@ -23,27 +23,24 @@ exports.checkUser = (roles = [], paths = {}) => {
 };
 
 exports.setRequestUrl = (url) => {
-    requestUrl = url;
+    return requestUrl = url;
 }
 
-exports.checkPermission = (url, role) => {
-    const Role = role || userRole;
-    const getUrl = url || requestUrl
+exports.checkPermission = () => {
     return [
         (req, res, next) => {
                     
             const pathList = getPath();
 
+
             for(path of pathList) {
-                    if (path.url == getUrl && path.method == requestMethod){ 
-                        if (path.roles.includes(Role)){
-                            break;
-                        }else{
-                            res.status(403).json({status: '403', message: "Unauthorized"});
+                    if (path.url == requestUrl){ 
+                        if (path.roles.includes(userRole)){
+                            return next();
                         }
                     }
                 }
-                next();
+                res.status(403).json({status: '403', message: "Unauthorized"});
         }
     ];
 
