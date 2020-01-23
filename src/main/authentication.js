@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
+const {getPath} = require('../_helper/paths')
+const {setRequestUrl} = require('../main/authorization')
 
-exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpiration) => {
+exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration) => {
     try {
         const refreshToken = jwt.sign({},key,{expiresIn: refreshTokenExpiration});
         const token = jwt.sign({
             id,
-            role,
             refreshToken
         },key,{ expiresIn: accessTokenExpiration });
         const tokenResponse = {
@@ -19,7 +20,22 @@ exports.generateToken = (id, role, key, accessTokenExpiration, refreshTokenExpir
     }
 };
 
+exports.checkPath = (requestUrl, requestMethod) =>{
+
+    setRequestUrl(requestUrl);
+
+    const pathList = getPath();
+    for(path of pathList) {
+        if (path.url == requestUrl && path.method == requestMethod){ 
+            return true;
+        }        
+    }
+    return false;
+}
+
 exports.verifyToken = (authHeader, key) => {
+
+    
     if (!authHeader) {
         return false;
     }

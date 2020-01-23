@@ -1,5 +1,8 @@
+const {getPath} = require('../_helper/paths');
 
-exports.checkUser = (roles = []) => {
+let requestUrl, userRole;
+
+exports.checkUser = (roles = [], paths = {}) => {
 
 
     if (typeof roles === 'string'){
@@ -19,7 +22,34 @@ exports.checkUser = (roles = []) => {
 
 };
 
+exports.setRequestUrl = (url) => {
+    requestUrl = url;
+}
+
+exports.checkPermission = (url, role) => {
+    const Role = role || userRole;
+    const getUrl = url || requestUrl
+    return [
+        (req, res, next) => {
+                    
+            const pathList = getPath();
+
+            for(path of pathList) {
+                    if (path.url == getUrl && path.method == requestMethod){ 
+                        if (path.roles.includes(Role)){
+                            break;
+                        }else{
+                            res.status(403).json({status: '403', message: "Unauthorized"});
+                        }
+                    }
+                }
+                next();
+        }
+    ];
+
+};
+
 exports.setCurrentRole = (role) => {
-    return userRole = role;
+    userRole = role;
 };
 
