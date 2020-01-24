@@ -27,7 +27,7 @@ exports.checkPath = (requestUrl, requestMethod) =>{
     const pathList = getPath();
     for(path of pathList) {
         if (path.url == requestUrl && path.method == requestMethod){ 
-            return true;
+            return path;
         }        
     }
     return false;

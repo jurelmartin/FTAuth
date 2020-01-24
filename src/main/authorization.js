@@ -13,7 +13,7 @@ exports.checkUser = (roles = [], paths = {}) => {
         (req, res, next) => {
             if (roles.length && !roles.includes(userRole)) {
                 // user's role is not authorized
-                res.status(401).json({ status: "401" , message: 'Unauthorized' });
+                res.status(403).json({ status: "403" , message: 'Unauthorized' });
             }
             // authentication and authorization successful
             next();
@@ -33,20 +33,26 @@ exports.checkPermission = () => {
             const pathList = getPath();
 
 
+            if(!userRole || !requestUrl || !pathList){
+                return next();
+            }
+
             for(path of pathList) {
                     if (path.url == requestUrl){ 
                         if (path.roles.includes(userRole)){
                             return next();
+                        }else{
+                            res.status(403).json({status: '403', message: "Unauthorized"});
                         }
                     }
                 }
-                res.status(403).json({status: '403', message: "Unauthorized"});
+            return next();
         }
     ];
 
 };
 
 exports.setCurrentRole = (role) => {
-    userRole = role;
+    return userRole = role;
 };
 
