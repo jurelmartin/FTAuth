@@ -42,7 +42,7 @@ exports.checkPermission = () => {
                         if (path.roles.includes(userRole)){
                             return next();
                         }else{
-                            res.status(403).json({status: '403', message: "Unauthorized"});
+                            res.status(403).json({status: 403, message: "Unauthorized"});
                         }
                     }
                 }

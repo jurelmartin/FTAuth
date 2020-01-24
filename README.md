@@ -2,6 +2,7 @@
 # FTAuth 
 [![Build Status](https://travis-ci.com/jurelmartin/FTAuth.svg?branch=master)](https://travis-ci.com/jurelmartin/FTAuth)
 [![Coverage Status](https://coveralls.io/repos/github/jurelmartin/FTAuth/badge.svg?branch=master)](https://coveralls.io/github/jurelmartin/FTAuth?branch=master)
+[![npm version](https://badge.fury.io/js/ftauth.svg)](https://badge.fury.io/js/ftauth)
 
 Final Task - Authentication and Authorization
 
