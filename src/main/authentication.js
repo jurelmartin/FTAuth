@@ -1,15 +1,13 @@
 const jwt = require('jsonwebtoken');
 
-exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration) => {
+exports.generateToken = (id, key, accessTokenExpiration) => {
     try {
-        const refreshToken = jwt.sign({},key,{expiresIn: refreshTokenExpiration});
         const token = jwt.sign({
-            id,
-            refreshToken
-        },key,{ expiresIn: accessTokenExpiration });
+            id
+        },
+        key,{ expiresIn: accessTokenExpiration });
         const tokenResponse = {
-            "token": token,
-            "refreshToken": refreshToken 
+            "token": token
         }
         return tokenResponse;
     } 
@@ -19,8 +17,6 @@ exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration)
 };
 
 exports.verifyToken = (authHeader, key) => {
-
-    
     if (!authHeader) {
         return false;
     }

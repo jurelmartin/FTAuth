@@ -9,11 +9,11 @@ const {authentication, authorization, paths} = require('../index');
 describe("FTAuth", function() {
     describe("generateToken()", function() {
         it('should generate token', () => {
-            const token = authentication.generateToken(1,"supersecretkey", '1h', '24h');
+            const token = authentication.generateToken(1,"supersecretkey", '1h');
             expect(token).to.not.equal(false);
         });
         it('should return false if parameters are wrong', () => {
-            const token = authentication.generateToken(1,"supersecretkey", '1h');
+            const token = authentication.generateToken(1,"supersecretkey");
             expect(token).to.equal(false);
         });
     });
@@ -46,7 +46,7 @@ describe("FTAuth", function() {
             paths.setRequestUrl('urls.com');
 
             paths.setPath([
-                {role: 'User', url: "url.com"}
+                {roles: ['User'], url: "url.com"}
             ])
     
             const nextSpy = sinon.spy();
@@ -65,7 +65,7 @@ describe("FTAuth", function() {
             paths.setRequestUrl('url.com');
 
             paths.setPath([
-                {roles: 'Admin', url: "url.com"}
+                {roles: ['Admin'], url: "url.com"}
             ])
     
             const nextSpy = sinon.spy();
