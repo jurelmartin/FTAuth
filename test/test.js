@@ -43,7 +43,7 @@ describe("FTAuth", function() {
         it("should execute next() if path is not on the list", () => {
             authorization.setCurrentRole('User')
 
-            authorization.setRequestUrl('urls.com');
+            paths.setRequestUrl('urls.com');
 
             paths.setPath([
                 {role: 'User', url: "url.com"}
@@ -62,7 +62,7 @@ describe("FTAuth", function() {
         it("should execute next() if path is on the list and roles match", () => {
             authorization.setCurrentRole('Admin')
 
-            authorization.setRequestUrl('url.com');
+            paths.setRequestUrl('url.com');
 
             paths.setPath([
                 {roles: 'Admin', url: "url.com"}
@@ -81,7 +81,7 @@ describe("FTAuth", function() {
         it("should execute return error if path is on the list but roles don't roles match", () => {
             authorization.setCurrentRole('User')
 
-            authorization.setRequestUrl('url.com');
+            paths.setRequestUrl('url.com');
 
             paths.setPath([
                 {role: 'User', url: "url.com"}
@@ -108,7 +108,7 @@ describe("FTAuth", function() {
                 paths.setPath([
                     {role: 'User', url: "url.com"}
                 ]);
-                const path = authentication.checkPath('url.com');
+                const path = paths.checkPath('url.com');
     
                 expect(path.url).to.equal('url.com')
             });
@@ -116,7 +116,7 @@ describe("FTAuth", function() {
                 paths.setPath([
                     {role: 'User', url: "url.com"}
                 ]);
-                const path = authentication.checkPath('urls.com');
+                const path = paths.checkPath('urls.com');
     
                 expect(path).to.equal(false)
             });

@@ -1,4 +1,4 @@
-const {getPath} = require('../_helper/paths');
+const {getPath, getRequestUrl} = require('../_helper/paths');
 
 let requestUrl, userRole;
 
@@ -22,15 +22,12 @@ exports.checkUser = (roles = [], paths = {}) => {
 
 };
 
-exports.setRequestUrl = (url) => {
-    return requestUrl = url;
-}
-
 exports.checkPermission = () => {
     return [
         (req, res, next) => {
                     
             const pathList = getPath();
+            const requestUrl = getRequestUrl();
 
 
             if(!userRole || !requestUrl || !pathList){
@@ -42,7 +39,7 @@ exports.checkPermission = () => {
                         if (path.roles.includes(userRole)){
                             return next();
                         }else{
-                            res.status(403).json({status: 403, message: "Unauthorized"});
+                            return res.status(403).json({status: 403, message: "Unauthorized"});
                         }
                     }
                 }

@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const {getPath} = require('../_helper/paths')
-const {setRequestUrl} = require('../main/authorization')
 
 exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration) => {
     try {
@@ -19,19 +17,6 @@ exports.generateToken = (id, key, accessTokenExpiration, refreshTokenExpiration)
         return false;
     }
 };
-
-exports.checkPath = (requestUrl, requestMethod) =>{
-
-    setRequestUrl(requestUrl);
-
-    const pathList = getPath();
-    for(path of pathList) {
-        if (path.url == requestUrl && path.method == requestMethod){ 
-            return path;
-        }        
-    }
-    return false;
-}
 
 exports.verifyToken = (authHeader, key) => {
 
