@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 exports.generateToken = (id, key, accessTokenExpiration) => {
     try {
-        const token = jwt.sign({
+        return  token = jwt.sign({
             id
         },
         key,{ expiresIn: accessTokenExpiration });
 
-        return token;
+        
     } 
     catch(err){
         return false;
