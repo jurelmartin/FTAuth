@@ -6,10 +6,8 @@ exports.generateToken = (id, key, accessTokenExpiration) => {
             id
         },
         key,{ expiresIn: accessTokenExpiration });
-        const tokenResponse = {
-            "token": token
-        }
-        return tokenResponse;
+
+        return token;
     } 
     catch(err){
         return false;
