@@ -19,7 +19,8 @@ describe("FTAuth", function() {
     });
     describe("setCurrentRole()", function() {
         it("should set the current user's role", () => {
-            expect(authorization.setCurrentRole('Admin')).to.equal('Admin');
+            authorization.setCurrentRole('Admin')
+            expect(authorization.getCurrentRole()).to.equal('Admin');
         });
     });
     describe("verifyToken()", function() {

@@ -7,23 +7,23 @@
 Final Task - Authentication and Authorization
 
 ## Install
-    $ npm install FTAuth
+    $ npm install ftauth
 
 ## Usage
 
-This package provides a functuion that acts as a middleware that you can use for Authenticating and Authorizing User depending on their Role (Admin, User).
+This package provides a function that acts as a middleware that you can use for Authenticating and Authorizing User depending on their Role (Admin, User).
 
 Example of How to use the functions, 
 
-For Creating a token
+For Creating a token, use function generateToken(id, key, accessTokenExpiration)
 
 ```javascript
-const {generateToken} = require('FTAuth');
+const { authentication } = require('ftauth');
 
-exports.login = (req, res, next) => {
+(req, res, next) => {
 
     const userRole = Role.User
-    const token = generateToken(1, userRole,"supersecretkey", '1h', '24hr');
+    const token = authentication.generateToken(userData.dataValues.id, process.env.KEY, process.env.ACCESS_TOKEN_EXP, process.env.REFRESH_TOKEN_EXP);
 
     if (token === undefined) {
         console.log('error');
@@ -33,31 +33,14 @@ exports.login = (req, res, next) => {
 };
 ```
 
-For Issuing a new token by refresh token
-
-```javascript
-exports.issueNewToken = (req, res, next) => {
-
-    const refreshToken = req.params.refreshToken;
-
-    if (req.refreshToken === refreshToken)
-    {
-        const newToken = generateToken(req.userId, req.role, 'supersecretkey', '1h', '24h');
-        res.status(200).json({message: "New token generated", token: newToken});
-    }else{
-        res.status(401).json({message: "failed to generate new token"});
-    }
-};
-```
-For Verifying token
+For Verifying token, use function verifyToken (authHeader, key)
 
 ```javascript
 
-const {verifyToken} = require('FTAuth');
-const {setCurrentRole} = require('FTAuth')
+const { authentication } = require('ftauth');
 
 
-module.exports = (req, res, next) => { 
+(req, res, next) => { 
     const authHeader = req.get('Authorization');
 
     const decodedToken = verifyToken(authHeader, 'supersecretkey');
@@ -72,6 +55,44 @@ module.exports = (req, res, next) => {
     setCurrentRole(decodedToken.role);
 
     next();
+
+};
+```
+## Restrict authentication access
+
+Assign paths that are subject to authentication by using setPath(path={}) function. setPath needs a specific object as parameter:
+
+```javascript
+    {roles: ['Admin'], method: 'GET', url: '/api/users'}
+```
+Use checkPath(url, requestMethod) to check if the request url matches the paths on the list.
+
+```javascript
+    const { paths } = require('ftauth')
+
+    const pathExist = paths.checkPath(req.originalUrl, req.method);
+
+```
+use SetCurrenRole(role) to set the user's role which can be accessed by the module. This is important as authoraztion function checks on a user's role to execute. 
+```javascript
+    const { authorization } = require('ftauth');
+    
+    authorization.SetCurrentRole('Admin');
+```
+
+Use checkPermission() function as middleware to check if the request is authorized. Take note that this only works if the authentication functions are already initiated as it is dependent to data created upon authentication.
+
+```javascript
+const { authorization } = require('ftauth');
+const { Router, static } = require('express');
+
+
+module.exports () => { 
+    router = Router();
+    
+    router.use(authorization.checkPermission());
+    
+    return router;
 
 };
 ```
@@ -79,46 +100,34 @@ module.exports = (req, res, next) => {
 
 ### Using it as a middleware
 
-
-
 ```javascript
-const {checkUser} = require('FTAuth');
-const Role = require('FTAuth/_helper');
-const tokenChecker = require('./tokenChecker')
-```
-> The code behind tokenChecker (or your middleware): 
-```javascript
-const {verifyToken} = require('FTAuth');
-const {setCurrentRole} = require('FTAuth')
+const {authentication, paths} = require('ftauth');
 
 
-module.exports = (req, res, next) => { 
+module.exports = (req, res, next) => {
+
+  paths.setPath([
+    {roles: ['Admin'], method: 'GET', url: '/api/users'}, 
+    {roles: ['Admin'], method: 'GET', url: '/api/user?id=' + req.query.id}, 
+    {roles: ['Admin', 'User', 'Profile'], method: 'PUT', url: '/api/update?id=' + req.query.id},
+    {roles: ['Admin'], method: 'DELETE', url: '/api/delete?id='+ req.query.id}
+  ]);
+
+  const pathExist = paths.checkPath(req.originalUrl, req.method);
+
+  if(pathExist){
     const authHeader = req.get('Authorization');
     // gets the decoded token from verify function
-    const decodedToken = verifyToken(authHeader, 'supersecretkey');
+    const decodedToken = authentication.verifyToken(authHeader, 'supersecretkey');
 
     if (!decodedToken) {
-        return res.status(403).json({ status: "401" , message: 'Not Authenticated' });
+      return res.status(401).json({ status: 401, message: 'Not Authenticated' });
     }
-    // put the decoded refresh token to request
-    req.refreshToken = decodedToken.refreshToken;
 
-    // set User's role for the checkUser function
-    setCurrentRole(decodedToken.role);
+    req.userId = decodedToken.id;
 
-    next();
+  }
 
-}
-
+  next();
+};
 ```
-
-> Example when using a use case
-
-```javascript
-app.use('/token/:refreshToken',tokenChecker, issueNewToken);
-```
-
-What this does is:
-1.) Authenticate the route first
-2.) If it succeeds, Will create a new token 
-
