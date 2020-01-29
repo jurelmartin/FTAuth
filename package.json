@@ -1,6 +1,6 @@
 {
   "name": "ftauth",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Final Task - Authorization and Authentication",
   "main": "index.js",
   "scripts": {
