@@ -15,11 +15,14 @@ exports.generateToken = (id, key, accessTokenExpiration) => {
 };
 
 exports.verifyToken = (authHeader, key) => {
-    if (!authHeader) {
-        return false;
+    let decodedToken, token;
+    if (authHeader.includes('bearer') || authHeader.includes('Bearer')) {
+        token = authHeader.split(' ')[1];
+    }else
+    {
+        token = authHeader;
     }
-    const token = authHeader.split(' ')[1];
-    let decodedToken;
+    
 
     try {
         decodedToken = jwt.verify(token, key);
